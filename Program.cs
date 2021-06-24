@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serilog;
+using Serilog.Events;
 
 namespace SeriTest
 {
@@ -14,7 +15,15 @@ namespace SeriTest
     {
         public static void Main(string[] args)
         {
+
+            var log = new LoggerConfiguration()
+                .WriteTo.File("log.txt", rollingInterval: RollingInterval.Day)
+                .CreateLogger();
+
             CreateHostBuilder(args).Build().Run();
+
+           
+
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

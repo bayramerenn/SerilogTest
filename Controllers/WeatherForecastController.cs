@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace SeriTest.Controllers
 {
@@ -26,6 +27,10 @@ namespace SeriTest.Controllers
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
+
+            var log = new LoggerConfiguration()
+                .WriteTo.File("log", rollingInterval: RollingInterval.Day)
+                .CreateLogger();
             var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
